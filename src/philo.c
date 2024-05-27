@@ -1,50 +1,66 @@
-/*number_of_philosophers time_to_die time_to_eat
-time_to_sleep
-[number_of_times_each_philosopher_must_eat]*/
 
-#include "philo.h"
+#include "../inc/philo.h"
 
-int number_of_philosophers = 5;
-
-void *routine(void *arg)
+void *routine()
 {
+	usleep(10000);
+	printf("thread executed\n");
 	return (NULL);
 }
 
-t_philo *philo_create(int *i)
+t_philo *philo_create(int i)
 {
 	t_philo *ph;
 
 	ph = malloc(sizeof(t_philo));
 	if(!ph)
 		return (NULL);
-	ph->id = *i;
-	ph->th = pthread_create(&(ph->th), NULL, routine, NULL);
-	if(ph->th != 0)
+	ph->id = i;
+	if(pthread_create(&(ph->th), NULL, routine, NULL))
 		return (NULL);
 	ph->next = NULL;
 	return (ph);
 }
 
-// вспомнить, как создавать списки 
-
 t_philo *philo_list(int number_of_philosophers)
 {
 	int i;
-	t_philo *philo_list;
+	t_philo *begin;
+	t_philo *curr;
 
-	i = 0;
-	philo_list = philo_create(i);
-
+	begin = philo_create(0);
+	curr = begin;
+	i = 1;
 	while(i < number_of_philosophers)
 	{
-		philo_create(i);
-
+		curr->next = philo_create(i);
+		if(!curr->next)
+		{
+			free_list(begin);
+			return (NULL);
+		}
+		curr = curr->next;
+		i++;
 	}
-
+	// curr->next = NULL;
+	return (begin);
 }
 
 int main()
 {
+	int number_of_philosophers = 5;
+	t_philo *list = philo_list(number_of_philosophers);
+	t_philo *start = list;
 
+	while(list != NULL)
+	{
+		if(pthread_join(list->th, NULL))
+		{
+			free_list(list);
+			return (1);
+		}
+		list = list->next;
+	}
+	free_list(start);
+	return (0);
 }
