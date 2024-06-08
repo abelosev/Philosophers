@@ -8,6 +8,7 @@
 		"wait.h": "c",
 		"stdlib.h": "c",
 		"__locale": "c",
-		"philo.h": "c"
+		"philo.h": "c",
+		"limits.h": "c"
 	}
 }

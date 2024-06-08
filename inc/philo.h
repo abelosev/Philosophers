@@ -9,39 +9,45 @@
 #include <sys/time.h>
 #include <sys/wait.h>
 #include <stdbool.h>
-#include <limits.h>
+#include <stdint.h>
 
 typedef struct s_philo
 {
 	int id;
-	int meals; //сколько meals было
-	// int flag;
 	pthread_t th;
-	pthread_mutex_t mutex;
+	int had_meals;
+	bool dead;
+	struct s_data *data;
 	struct s_philo *next;
 } t_philo;
 
 typedef struct s_data
 {
 	int philo_nb;
-	int flag_fin; 
-	long long int time_die;
-	long long int time_eat;
-	long long int time_sleep;
+	int time_die;
+	int time_eat;
+	int time_sleep;
 	int	meal_nb;
 	t_philo *philos;
+	bool flag_death;
+	int nb_full;
+	pthread_mutex_t *fork;
+	pthread_mutex_t print;
+	char **logs;
 } t_data;
 
 //outils
 void		free_list(t_philo *list);
+void		free_data(t_data *data);
 int			ft_atoi_modif(const char *str);
 bool		check_nbr(const char *str, int *res);
 bool		check_input(int ac, char **av);
-
-//
+char		*ft_strdup(const char *s1);
+void		ft_print(t_data *data, int index);
+void		*routine(void *arg);
+u_int64_t	get_timestamp(void);
 t_philo		*philo_list(t_data *data);
-
-//time
-long int	get_timestamp(void);
+int			init_data(t_data *data, char **av);
+t_philo		*philo_list(t_data *data);
 
 #endif

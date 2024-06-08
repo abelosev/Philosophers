@@ -7,43 +7,55 @@ void free_list(t_philo *list)
 	while(list != NULL)
 	{
 		tmp = list->next;
-		pthread_mutex_destroy(&(list->mutex));
+		// free(list->data); //??
 		free(list);
 		list = tmp;
 	}
 }
 
-bool check_input(int ac, char **av)
+void	free_tab(char **tab)
 {
-	int i;
-	int res;
+	int	i;
 
-	i = 1;
-	res = 0;
-	if(ac < 5 || ac > 6)
+	i = 0;
+	if(!tab)
+		return ;
+	while (tab[i] != NULL)
 	{
-		printf("The number of args is not correct\n");
-		return (false);
-	}
-	while(i < ac)
-	{
-		if(!check_nbr(av[i], &res))
-		{
-			printf("At least one of the args is not correct\n");
-			return (false);
-		}
-		if(i == 1 && res > 200)
-		{
-			printf("The nb of philos should be less than 200\n");
-			return (false);
-		}
-		if(i != 5 && res == 0)
-		{
-			printf("This args can't be equal to '0'\n");
-			return (false);
-		}
-		res = 0;
+		free(tab[i]);
 		i++;
 	}
-	return (true);
+	free(tab);
+}
+
+void free_data(t_data *data)
+{
+	int i;
+
+	i = 0;
+	if(data->philos)
+		free_list(data->philos);
+	if(data->logs)
+		free_tab(data->logs);
+	pthread_mutex_destroy(&data->print);
+	if(data->fork)
+	{
+		while(i < data->philo_nb)
+		{
+			pthread_mutex_destroy(&data->fork[i]);
+			i++;
+		}
+	}
+	free(data->fork);
+	free(data);
+}
+
+void ft_print(t_data *data, int index)
+{
+	u_int64_t time_ms;
+	
+	pthread_mutex_lock(&data->print);
+	time_ms = get_timestamp();
+	printf("%llu %d %s\n", time_ms, data->philos->id, data->logs[index]);
+	pthread_mutex_unlock(&data->print);
 }
