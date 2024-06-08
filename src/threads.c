@@ -30,6 +30,7 @@ t_philo *philo_create(int i, t_data *data)
 		return (NULL);
 	pthread_mutex_init(&(ph->mutex), NULL);
 	ph->next = NULL;
+	//creer la fourchette ici
 	return (ph);
 }
 

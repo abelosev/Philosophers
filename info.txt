@@ -1,2 +1,3 @@
 https://github.com/nafuka11/philosophers-visualizer/blob/master/README.md
 
+valgrind --tool=helgrind
