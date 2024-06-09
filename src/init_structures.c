@@ -23,9 +23,9 @@ t_philo *philo_list(t_data *data)
 	t_philo *begin;
 	t_philo *curr;
 
-	begin = philo_create(0, data);
+	begin = philo_create(1, data); //I don't want a id = 0 at all
 	curr = begin;
-	i = 1;
+	i = 2;
 	while(i < data->philo_nb)
 	{
 		curr->next = philo_create(i, data);
