@@ -5,11 +5,11 @@ void *routine(void *arg)
 	t_philo *ph;
 
 	ph = (t_philo *)arg;
-	while(!ph->data->flag_death)
+	while(ph->data->flag_death == false)
 	{
-		pthread_mutex_lock(&ph->data->fork[ph->id + 1]);
+		pthread_mutex_lock(&ph->data->fork[ph->id + 1]); //left
 		ft_print(ph, 0);
-		pthread_mutex_lock(&ph->data->fork[ph->id]);
+		pthread_mutex_lock(&ph->data->fork[ph->id]); //right
 		ft_print(ph, 1);
 		ft_print(ph, 2);
 		ft_usleep(ph, ph->data->time_eat);
@@ -35,4 +35,3 @@ void *routine(void *arg)
 	}
 	return (void *)ph;
 }
-
