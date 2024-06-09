@@ -6,6 +6,11 @@ void ft_print(t_philo *ph, int index)
 	
 	pthread_mutex_lock(&ph->data->print);
 	time_ms = get_timestamp();
+	if(ph->data->flag_death == true)
+	{
+		pthread_mutex_unlock(&ph->data->print);
+		return ;
+	}
 	printf("%llu %d %s\n", time_ms, ph->id, ph->data->logs[index]);
 	pthread_mutex_unlock(&ph->data->print);
 }
@@ -31,8 +36,8 @@ int ft_usleep(t_philo *ph, u_int64_t gap)
 			return (1);
 		if(get_timestamp() - ph->end_meal >= (u_int64_t)ph->data->time_die)
 		{
-			ph->data->flag_death = true;
 			ft_print(ph, 5);
+			ph->data->flag_death = true;
 			return (1);
 		}
 		usleep(100);

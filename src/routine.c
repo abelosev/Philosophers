@@ -10,7 +10,6 @@ void *routine(void *arg)
 	{
 		if(ph->id % 2 != 0)
 		{
-			// ft_usleep(ph, 10000);
 			pthread_mutex_lock(&ph->data->fork[ph->id]); //left
 			ft_print(ph, 0);
 			pthread_mutex_lock(&ph->data->fork[ph->id - 1]); //right (- 1 because I number my philos from 1)
@@ -25,9 +24,14 @@ void *routine(void *arg)
 		}
 		ft_print(ph, 2);
 		if(ft_usleep(ph, ph->data->time_eat))
+		{
+			pthread_mutex_unlock(&ph->data->fork[ph->id]);
+			pthread_mutex_unlock(&ph->data->fork[ph->id - 1]);
 			break ;
+		}
 		pthread_mutex_unlock(&ph->data->fork[ph->id]);
 		pthread_mutex_unlock(&ph->data->fork[ph->id - 1]);
+
 		ph->end_meal = get_timestamp();
 		ph->had_meals++;
 		if(ph->data->meal_nb != 0 && ph->had_meals == ph->data->meal_nb)

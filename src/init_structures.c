@@ -49,9 +49,6 @@ int init_data(t_data *data, char **av)
 	init_args(data, av);
 	data->flag_death = false;
 	data->nb_full = 0;
-	// data->philos = philo_list(data);
-	// if(!data->philos)
-	// 	return (1);
 	if(init_logs(data))
 		return (1);
 	if(init_mutexes(data))
