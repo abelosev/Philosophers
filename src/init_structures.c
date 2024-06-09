@@ -1,45 +1,5 @@
 #include "../inc/philo.h"
 
-t_philo *philo_create(int i, t_data *data)
-{
-	t_philo *ph;
-
-	ph = malloc(sizeof(t_philo));
-	if(!ph)
-		return (NULL);
-	ph->id = i;
-	ph->had_meals = 0;
-	ph->end_meal = 0;
-	ph->data = data;
-	if(pthread_create(&(ph->th), NULL, routine, (void *)ph))
-		return (NULL);
-	ph->next = NULL;
-	return (ph);
-}
-
-t_philo *philo_list(t_data *data)
-{
-	int i;
-	t_philo *begin;
-	t_philo *curr;
-
-	begin = philo_create(1, data); //I don't want a id = 0 at all
-	curr = begin;
-	i = 2;
-	while(i <= data->philo_nb)
-	{
-		curr->next = philo_create(i, data);
-		if(!curr->next)
-		{
-			free_list(begin);
-			return (NULL);
-		}
-		curr = curr->next;
-		i++;
-	}
-	return (begin);
-}
-
 void init_args(t_data *data, char **av)
 {
 	data->philo_nb = ft_atoi_modif(av[1]);
@@ -89,12 +49,52 @@ int init_data(t_data *data, char **av)
 	init_args(data, av);
 	data->flag_death = false;
 	data->nb_full = 0;
-	data->philos = philo_list(data);
-	if(!data->philos)
-		return (1);
+	// data->philos = philo_list(data);
+	// if(!data->philos)
+	// 	return (1);
 	if(init_logs(data))
 		return (1);
 	if(init_mutexes(data))
 		return (1);
 	return (0);
+}
+
+t_philo *philo_create(int i, t_data *data)
+{
+	t_philo *ph;
+
+	ph = malloc(sizeof(t_philo));
+	if(!ph)
+		return (NULL);
+	ph->id = i;
+	ph->had_meals = 0;
+	ph->end_meal = 0;
+	ph->data = data;
+	if(pthread_create(&(ph->th), NULL, routine, (void *)ph))
+		return (NULL);
+	ph->next = NULL;
+	return (ph);
+}
+
+t_philo *philo_list(t_data *data)
+{
+	int i;
+	t_philo *begin;
+	t_philo *curr;
+
+	begin = philo_create(1, data); //because I don't want an id = 0 at all
+	curr = begin;
+	i = 2;
+	while(i <= data->philo_nb)
+	{
+		curr->next = philo_create(i, data);
+		if(!curr->next)
+		{
+			free_list(begin);
+			return (NULL);
+		}
+		curr = curr->next;
+		i++;
+	}
+	return (begin);
 }

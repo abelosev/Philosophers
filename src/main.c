@@ -16,6 +16,9 @@ int main(int ac, char **av)
 		free_data(data);
 		exit(EXIT_FAILURE);
 	}
+	data->philos = philo_list(data);
+	if(!data->philos)
+		return (1);
 	start = data->philos;
 	while(start != NULL)
 	{
