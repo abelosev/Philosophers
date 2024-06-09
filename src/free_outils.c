@@ -36,7 +36,7 @@ void free_data(t_data *data)
 		free_list(data->philos);
 	if(data->logs)
 		free_tab(data->logs);
-	pthread_mutex_destroy(&data->print);
+	pthread_mutex_destroy(&data->print); //what if it doesn't exist yet?
 	if(data->fork)
 	{
 		while(i < data->philo_nb)
