@@ -5,10 +5,12 @@ void *routine(void *arg)
 	t_philo *ph;
 
 	ph = (t_philo *)arg;
+	ph->end_meal = get_timestamp(); //starting time
 	while(ph->data->flag_death == false)
 	{
 		if(ph->id % 2 != 0)
 		{
+			// ft_usleep(ph, 10000);
 			pthread_mutex_lock(&ph->data->fork[ph->id]); //left
 			ft_print(ph, 0);
 			pthread_mutex_lock(&ph->data->fork[ph->id - 1]); //right (- 1 because I number my philos from 1)
@@ -36,12 +38,15 @@ void *routine(void *arg)
 		ft_usleep(ph, ph->data->time_sleep);
 		ft_print(ph, 4);
 
-		if(get_timestamp() - ph->end_meal >= (u_int64_t)ph->data->time_die)
+		if(get_timestamp() - ph->end_meal >= (u_int64_t)ph->data->time_die) //do I actually need it here?
 		{
+			// printf("\nAM HERE\n");
 			ft_print(ph, 5);
 			ph->data->flag_death = true;
 			break ;
 		}
+		// if(ph->data->flag_death == true)
+		// 	printf("\nDEAD\n");
 	}
 	return (void *)ph;
 }

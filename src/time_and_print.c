@@ -30,6 +30,7 @@ void ft_usleep(t_philo *ph, u_int64_t gap)
 		if(get_timestamp() - ph->end_meal >= (u_int64_t)ph->data->time_die)
 		{
 			ph->data->flag_death = true;
+			ft_print(ph, 5);
 			break ;
 		}
 		usleep(100);
