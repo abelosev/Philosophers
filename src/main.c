@@ -4,29 +4,32 @@
 int main(int ac, char **av)
 {
 	t_data *data;
-	t_philo *list;
 	t_philo *start;
 
 	if(!check_input(ac, av))
-		return (1);
+		exit(EXIT_FAILURE);
 	data = malloc(sizeof(t_data));
 	if(!data)
-		return (1);
+		exit(EXIT_FAILURE);
 	if(init_data(data, av))
 	{
 		free_data(data);
-		return (1);
+		exit(EXIT_FAILURE);
 	}
-	list = philo_list(data);
-	start = list;
-	while(list != NULL)
+	start = data->philos;
+	while(start != NULL)
 	{
-		if(pthread_join(list->th, NULL))
+		if(pthread_join(start->th, (void **)&(start->data))) //какой аргумент?
 		{
 			free_data(data);
-			return (1);
+			exit(EXIT_FAILURE);
 		}
-		list = list->next;
+		if(((t_philo *)start)->data->flag_death == true || ((t_philo *)start)->data->nb_full == ((t_philo *)start)->data->philo_nb)
+		{
+			free(data);
+			return (0);
+		}
+		start = start->next;
 	}
 	free_data(data);
 	return (0);

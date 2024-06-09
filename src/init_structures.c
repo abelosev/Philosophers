@@ -9,9 +9,9 @@ t_philo *philo_create(int i, t_data *data)
 		return (NULL);
 	ph->id = i;
 	ph->had_meals = 0;
-	ph->dead = false;
+	ph->end_meal = 0;
 	ph->data = data;
-	if(pthread_create(&(ph->th), NULL, routine, (void *)data))
+	if(pthread_create(&(ph->th), NULL, routine, (void *)ph))
 		return (NULL);
 	ph->next = NULL;
 	return (ph);
@@ -57,12 +57,12 @@ int init_logs(t_data *data)
 	data->logs = malloc(sizeof(char *) * 7);
 	if(!data->logs)
 		return (1);
-	data->logs[0] = ft_strdup(" has taken a left fork\n");
-	data->logs[1] = ft_strdup(" has taken a right fork\n");
-	data->logs[2] = ft_strdup(" is eating\n");
-	data->logs[3] = ft_strdup(" is sleeping\n");
-	data->logs[4] = ft_strdup(" is thinking\n");
-	data->logs[5] = ft_strdup(" died\n");
+	data->logs[0] = ft_strdup("has taken a left fork\n");
+	data->logs[1] = ft_strdup("has taken a right fork\n");
+	data->logs[2] = ft_strdup("is eating\n");
+	data->logs[3] = ft_strdup("is sleeping\n");
+	data->logs[4] = ft_strdup("is thinking\n");
+	data->logs[5] = ft_strdup("died\n");
 	data->logs[6] = NULL;
 	return (0);
 }

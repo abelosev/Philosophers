@@ -9,6 +9,11 @@
 		"stdlib.h": "c",
 		"__locale": "c",
 		"philo.h": "c",
-		"limits.h": "c"
+		"limits.h": "c",
+		"array": "c",
+		"iterator": "c",
+		"string": "c",
+		"string_view": "c",
+		"vector": "c"
 	}
 }

@@ -16,7 +16,8 @@ typedef struct s_philo
 	int id;
 	pthread_t th;
 	int had_meals;
-	bool dead;
+	//bool dead;
+	u_int64_t end_meal;
 	struct s_data *data;
 	struct s_philo *next;
 } t_philo;
@@ -43,11 +44,12 @@ int			ft_atoi_modif(const char *str);
 bool		check_nbr(const char *str, int *res);
 bool		check_input(int ac, char **av);
 char		*ft_strdup(const char *s1);
-void		ft_print(t_data *data, int index);
+void		ft_print(t_philo *ph, int index);
 void		*routine(void *arg);
 u_int64_t	get_timestamp(void);
 t_philo		*philo_list(t_data *data);
 int			init_data(t_data *data, char **av);
 t_philo		*philo_list(t_data *data);
+void		ft_usleep(t_philo *ph, u_int64_t gap);
 
 #endif

@@ -7,7 +7,6 @@ void free_list(t_philo *list)
 	while(list != NULL)
 	{
 		tmp = list->next;
-		// free(list->data); //??
 		free(list);
 		list = tmp;
 	}
@@ -48,14 +47,4 @@ void free_data(t_data *data)
 	}
 	free(data->fork);
 	free(data);
-}
-
-void ft_print(t_data *data, int index)
-{
-	u_int64_t time_ms;
-	
-	pthread_mutex_lock(&data->print);
-	time_ms = get_timestamp();
-	printf("%llu %d %s\n", time_ms, data->philos->id, data->logs[index]);
-	pthread_mutex_unlock(&data->print);
 }
