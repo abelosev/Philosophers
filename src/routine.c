@@ -5,7 +5,7 @@ void *routine(void *arg)
 	t_philo *ph;
 
 	ph = (t_philo *)arg;
-	ph->end_meal = get_timestamp(); //starting time
+	ph->start_meal = ph->data->start_simul; //starting time of the simulation
 	while(ph->data->flag_death == false)
 	{
 		if(ph->id % 2 != 0)
@@ -22,6 +22,7 @@ void *routine(void *arg)
 			pthread_mutex_lock(&ph->data->fork[ph->id]); //left
 			ft_print(ph, 0);
 		}
+		ph->start_meal = get_timestamp(); //is this placement correct?
 		ft_print(ph, 2);
 		if(ft_usleep(ph, ph->data->time_eat))
 		{
@@ -31,8 +32,6 @@ void *routine(void *arg)
 		}
 		pthread_mutex_unlock(&ph->data->fork[ph->id]);
 		pthread_mutex_unlock(&ph->data->fork[ph->id - 1]);
-
-		ph->end_meal = get_timestamp();
 		ph->had_meals++;
 		if(ph->data->meal_nb != 0 && ph->had_meals == ph->data->meal_nb)
 		{

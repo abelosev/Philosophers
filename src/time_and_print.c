@@ -34,7 +34,7 @@ int ft_usleep(t_philo *ph, u_int64_t gap)
 	{
 		if(ph->data->flag_death == true) //попытка отследить этот флаг в других тредах
 			return (1);
-		if(get_timestamp() - ph->end_meal >= (u_int64_t)ph->data->time_die)
+		if(get_timestamp() - ph->start_meal >= (u_int64_t)ph->data->time_die)
 		{
 			ft_print(ph, 5);
 			ph->data->flag_death = true;

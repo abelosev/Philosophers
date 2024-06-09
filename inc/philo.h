@@ -17,7 +17,7 @@ typedef struct s_philo
 	pthread_t th;
 	int had_meals;
 	//bool dead;
-	u_int64_t end_meal;
+	u_int64_t start_meal;
 	struct s_data *data;
 	struct s_philo *next;
 } t_philo;
@@ -29,6 +29,7 @@ typedef struct s_data
 	int time_eat;
 	int time_sleep;
 	int	meal_nb;
+	u_int64_t start_simul;
 	t_philo *philos;
 	bool flag_death;
 	int nb_full;

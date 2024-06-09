@@ -49,6 +49,7 @@ int init_data(t_data *data, char **av)
 	init_args(data, av);
 	data->flag_death = false;
 	data->nb_full = 0;
+	data->start_simul = get_timestamp();
 	if(init_logs(data))
 		return (1);
 	if(init_mutexes(data))
@@ -65,7 +66,7 @@ t_philo *philo_create(int i, t_data *data)
 		return (NULL);
 	ph->id = i;
 	ph->had_meals = 0;
-	ph->end_meal = 0;
+	ph->start_meal = 0;
 	ph->data = data;
 	if(pthread_create(&(ph->th), NULL, routine, (void *)ph))
 		return (NULL);
