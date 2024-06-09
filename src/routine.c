@@ -43,13 +43,6 @@ void *routine(void *arg)
 		if(ft_usleep(ph, ph->data->time_sleep))
 			break ;
 		ft_print(ph, 4);
-
-		// if(get_timestamp() - ph->end_meal >= (u_int64_t)ph->data->time_die) //do I actually need it here?
-		// {
-		// 	ft_print(ph, 5);
-		// 	ph->data->flag_death = true;
-		// 	break ;
-		// }
 	}
 	return (void *)ph;
 }
