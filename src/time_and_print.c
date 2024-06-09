@@ -20,19 +20,22 @@ u_int64_t get_timestamp()
 	return (time_ms);
 }
 
-void ft_usleep(t_philo *ph, u_int64_t gap)
+int ft_usleep(t_philo *ph, u_int64_t gap)
 {
 	u_int64_t start;
 
 	start = get_timestamp();
 	while(get_timestamp() - start < gap)
 	{
+		if(ph->data->flag_death == true) //попытка отследить этот флаг в других тредах
+			return (1);
 		if(get_timestamp() - ph->end_meal >= (u_int64_t)ph->data->time_die)
 		{
 			ph->data->flag_death = true;
 			ft_print(ph, 5);
-			break ;
+			return (1);
 		}
 		usleep(100);
 	}
+	return (0);
 }

@@ -50,6 +50,6 @@ u_int64_t	get_timestamp(void);
 t_philo		*philo_list(t_data *data);
 int			init_data(t_data *data, char **av);
 t_philo		*philo_list(t_data *data);
-void		ft_usleep(t_philo *ph, u_int64_t gap);
+int			ft_usleep(t_philo *ph, u_int64_t gap);
 
 #endif

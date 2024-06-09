@@ -24,7 +24,8 @@ void *routine(void *arg)
 			ft_print(ph, 0);
 		}
 		ft_print(ph, 2);
-		ft_usleep(ph, ph->data->time_eat);
+		if(ft_usleep(ph, ph->data->time_eat))
+			break ;
 		pthread_mutex_unlock(&ph->data->fork[ph->id]);
 		pthread_mutex_unlock(&ph->data->fork[ph->id - 1]);
 		ph->end_meal = get_timestamp();
@@ -35,18 +36,16 @@ void *routine(void *arg)
 			break ;
 		}
 		ft_print(ph, 3);
-		ft_usleep(ph, ph->data->time_sleep);
+		if(ft_usleep(ph, ph->data->time_sleep))
+			break ;
 		ft_print(ph, 4);
 
-		if(get_timestamp() - ph->end_meal >= (u_int64_t)ph->data->time_die) //do I actually need it here?
-		{
-			// printf("\nAM HERE\n");
-			ft_print(ph, 5);
-			ph->data->flag_death = true;
-			break ;
-		}
-		// if(ph->data->flag_death == true)
-		// 	printf("\nDEAD\n");
+		// if(get_timestamp() - ph->end_meal >= (u_int64_t)ph->data->time_die) //do I actually need it here?
+		// {
+		// 	ft_print(ph, 5);
+		// 	ph->data->flag_death = true;
+		// 	break ;
+		// }
 	}
 	return (void *)ph;
 }
