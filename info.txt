@@ -8,3 +8,34 @@ COMMENTAIRES:
 free_outils.c 51 : pthread_mutex_destroy(&(data->print)); //what if it doesn't exist yet?
 
 init_data.c 24 : data->meal_nb = 0;	// или -1 ?
+
+
+ERRORS :
+
+//// leaks /////
+
+./philo 5 800 200 200
+
+==3474982== Process terminating with default action of signal 2 (SIGINT)
+==3474982==    at 0x49597F6: clock_nanosleep@@GLIBC_2.17 (clock_nanosleep.c:78)
+==3474982==    by 0x495E676: nanosleep (nanosleep.c:25)
+==3474982==    by 0x498FF2E: usleep (usleep.c:31)
+==3474982==    by 0x10A4B0: ft_usleep (time_and_print.c:74)
+==3474982==    by 0x10A16F: routine (routine.c:75)
+==3474982==    by 0x4908AC2: start_thread (pthread_create.c:442)
+==3474982==    by 0x4999A03: clone (clone.S:100)
+==3474982== 
+==3474982== HEAP SUMMARY:
+==3474982==     in use at exit: 3,149 bytes in 21 blocks
+==3474982==   total heap usage: 21 allocs, 0 frees, 3,149 bytes allocated
+==3474982== 
+==3474982== LEAK SUMMARY:
+==3474982==    definitely lost: 0 bytes in 0 blocks
+==3474982==    indirectly lost: 0 bytes in 0 blocks
+==3474982==      possibly lost: 1,360 bytes in 5 blocks
+==3474982==    still reachable: 1,789 bytes in 16 blocks
+==3474982==         suppressed: 0 bytes in 0 blocks
+==3474982== Rerun with --leak-check=full to see details of leaked memory
+==3474982== 
+==3474982== For lists of detected and suppressed errors, rerun with: -s
+==3474982== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

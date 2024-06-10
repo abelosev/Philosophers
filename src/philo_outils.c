@@ -1,21 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time_and_print.c                                   :+:      :+:    :+:   */
+/*   philo_outils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelosev <abelosev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:05:36 by abelosev          #+#    #+#             */
-/*   Updated: 2024/06/10 18:05:37 by abelosev         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:41:22 by abelosev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-void ft_print(t_philo *ph, int index)
+u_int64_t	get_timestamp()
 {
-	u_int64_t time_ms;
+	struct timeval	tv;
+	u_int64_t		time_ms;
+
+	gettimeofday(&tv, NULL);
+	time_ms = tv.tv_sec * 1000 + (tv.tv_usec / 1000);
+	return (time_ms);
+}
+
+int	end_simul(t_philo *ph)
+{
+	int	res;
 	
+	pthread_mutex_lock(&ph->data->dead);
+	pthread_mutex_lock(&(ph->data->full));
+	if (ph->data->flag_death)
+		res = 1;
+	else if (ph->data->meal_nb != 0 && ph->data->nb_full == ph->data->philo_nb)
+		res = 2;
+	else
+		res = 0;
+	pthread_mutex_unlock(&(ph->data->full));
+	pthread_mutex_unlock(&ph->data->dead);
+	return (res);
+}
+
+void	ft_print(t_philo *ph, int index)
+{
+	u_int64_t	time_ms;
+
 	pthread_mutex_lock(&ph->data->print);
 	time_ms = get_timestamp();
 	pthread_mutex_lock(&ph->data->dead);
@@ -39,16 +66,6 @@ void ft_print(t_philo *ph, int index)
 	pthread_mutex_unlock(&ph->data->print);
 }
 
-u_int64_t get_timestamp()
-{
-	struct timeval tv;
-	u_int64_t time_ms;
-
-	gettimeofday(&tv, NULL);
-	time_ms = tv.tv_sec * 1000 + (tv.tv_usec / 1000);
-	return (time_ms);
-}
-
 int ft_usleep(t_philo *ph, u_int64_t gap)
 {
 	u_int64_t start;
@@ -66,7 +83,6 @@ int ft_usleep(t_philo *ph, u_int64_t gap)
 		if(get_timestamp() - ph->start_meal >= (u_int64_t)ph->data->time_die)
 		{
 			ft_print(ph, 5);
-			ph->dead = true;
 			pthread_mutex_lock(&ph->data->dead); //is it really necessary?
 			ph->data->flag_death = true;
 			pthread_mutex_unlock(&ph->data->dead);

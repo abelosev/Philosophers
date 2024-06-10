@@ -6,7 +6,7 @@
 /*   By: abelosev <abelosev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:05:30 by abelosev          #+#    #+#             */
-/*   Updated: 2024/06/10 18:05:31 by abelosev         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:25:49 by abelosev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void *routine(void *arg)
 	if(ph->data->philo_nb == 1)
 	{
 		ft_print(ph, 5);
-		ph->dead = true;
 		pthread_mutex_lock(&ph->data->dead); //is it really necessary?
 		ph->data->flag_death = true;
 		pthread_mutex_unlock(&ph->data->dead);

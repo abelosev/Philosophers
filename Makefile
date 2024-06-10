@@ -13,7 +13,7 @@ SRC	=	${addprefix src/, \
 		libft_outils.c \
 		main.c \
 		routine.c \
-		time_and_print.c}
+		philo_outils.c}
 
 OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
 
