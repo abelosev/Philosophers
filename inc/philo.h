@@ -6,7 +6,7 @@
 /*   By: abelosev <abelosev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:04:50 by abelosev          #+#    #+#             */
-/*   Updated: 2024/06/10 18:41:03 by abelosev         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:05:21 by abelosev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ typedef struct s_data
 	char			**logs;
 }	t_data;
 
-int			ft_usleep(t_philo *ph, u_int64_t gap);
 int			ft_atoi_modif(const char *str);
+int			ft_usleep(t_philo *ph, u_int64_t gap);
 int			init_data(t_data *data, char **av);
 int			end_simul(t_philo *ph);
 void		free_list(t_philo *list);
