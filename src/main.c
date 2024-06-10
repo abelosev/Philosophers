@@ -6,7 +6,7 @@
 /*   By: abelosev <abelosev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:05:21 by abelosev          #+#    #+#             */
-/*   Updated: 2024/06/10 18:29:17 by abelosev         ###   ########.fr       */
+/*   Updated: 2024/06/10 21:23:49 by abelosev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	main(int ac, char **av)
 		}
 		start = start->next;
 	}
+	if (data->meal_nb != 0 && data->nb_full == data->philo_nb)
+		full_log(data->philos);
 	free_data(data);
 	return (0);
 }

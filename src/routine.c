@@ -6,7 +6,7 @@
 /*   By: abelosev <abelosev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:05:30 by abelosev          #+#    #+#             */
-/*   Updated: 2024/06/10 19:59:44 by abelosev         ###   ########.fr       */
+/*   Updated: 2024/06/10 21:29:07 by abelosev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ int	forks_taken(t_philo *ph, int l_index, int r_index)
 {
 	ph->start_meal = get_timestamp();
 	ft_print(ph, 1);
+	ph->had_meals++;
+	pthread_mutex_lock(&ph->data->full);
+	if (ph->had_meals == ph->data->meal_nb)
+		ph->data->nb_full++;
+	pthread_mutex_unlock(&ph->data->full);
 	if (ft_usleep(ph, ph->data->time_eat))
 	{
 		pthread_mutex_unlock(&ph->data->fork[l_index]);
@@ -48,7 +53,6 @@ int	forks_taken(t_philo *ph, int l_index, int r_index)
 	}
 	pthread_mutex_unlock(&ph->data->fork[r_index]);
 	pthread_mutex_unlock(&ph->data->fork[l_index]);
-	ph->had_meals++;
 	if (end_simul(ph) != 0)
 		return (1);
 	return (0);
@@ -56,7 +60,7 @@ int	forks_taken(t_philo *ph, int l_index, int r_index)
 
 int	eating(t_philo *ph, int l_index, int r_index)
 {
-	if (ph->id % 2 != 0)
+	if (ph->data->philo_nb % 2 != 0)
 	{
 		if (taking_fork(ph, l_index))
 			return (1);
@@ -66,14 +70,14 @@ int	eating(t_philo *ph, int l_index, int r_index)
 			return (1);
 		}
 	}
-	else if (ph->id % 2 == 0)
+	else if (ph->data->philo_nb % 2 == 0)
 	{
 		if (taking_fork(ph, r_index))
 			return (1);
 		if (taking_fork(ph, l_index))
 		{
 			pthread_mutex_unlock(&ph->data->fork[r_index]);
-			return (1);	
+			return (1);
 		}
 	}
 	if (forks_taken(ph, l_index, r_index))

@@ -6,7 +6,7 @@
 /*   By: abelosev <abelosev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:05:36 by abelosev          #+#    #+#             */
-/*   Updated: 2024/06/10 20:06:02 by abelosev         ###   ########.fr       */
+/*   Updated: 2024/06/10 21:30:07 by abelosev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	death_log(t_philo *ph)
 	u_int64_t	time_ms;
 
 	pthread_mutex_lock(&ph->data->print);
-	time_ms = get_timestamp();
+	time_ms = get_timestamp() - ph->data->start_simul;
 	printf("%lu %d %s\n", time_ms, ph->id, ph->data->logs[4]);
 	pthread_mutex_unlock(&ph->data->print);
 }
@@ -27,8 +27,8 @@ void	full_log(t_philo *ph)
 	u_int64_t	time_ms;
 
 	pthread_mutex_lock(&ph->data->print);
-	time_ms = get_timestamp();
-	printf("%lu %d %s\n", time_ms, ph->id, ph->data->logs[5]);
+	time_ms = get_timestamp() - ph->data->start_simul;
+	printf("%lu %s\n", time_ms, ph->data->logs[5]);
 	pthread_mutex_unlock(&ph->data->print);
 }
 
@@ -38,18 +38,17 @@ int	end_simul(t_philo *ph)
 
 	pthread_mutex_lock(&ph->data->dead);
 	pthread_mutex_lock(&(ph->data->full));
-	if (get_timestamp() - ph->start_meal >= (u_int64_t)ph->data->time_die)
-		ph->data->flag_death = true;
 	if (ph->data->flag_death)
-	{
-		death_log(ph);
 		res = 1;
+	else if (!ph->data->flag_death
+		&& get_timestamp() - ph->start_meal >= (u_int64_t)ph->data->time_die)
+	{
+		ph->data->flag_death = true;
+		death_log(ph);
+		res = 3;
 	}
 	else if (ph->data->meal_nb != 0 && ph->data->nb_full == ph->data->philo_nb)
-	{
-		full_log(ph);
 		res = 2;
-	}
 	else
 		res = 0;
 	pthread_mutex_unlock(&(ph->data->full));
@@ -61,10 +60,10 @@ int	ft_print(t_philo *ph, int index)
 {
 	u_int64_t	time_ms;
 
-	time_ms = get_timestamp();
 	if (end_simul(ph) != 0)
 		return (1);
 	pthread_mutex_lock(&ph->data->print);
+	time_ms = get_timestamp() - ph->data->start_simul;
 	printf("%lu %d %s\n", time_ms, ph->id, ph->data->logs[index]);
 	pthread_mutex_unlock(&ph->data->print);
 	return (0);
