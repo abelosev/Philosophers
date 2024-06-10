@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft_outils.c                                     :+:      :+:    :+:   */
+/*   basic_outils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelosev <abelosev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:05:12 by abelosev          #+#    #+#             */
-/*   Updated: 2024/06/10 18:19:45 by abelosev         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:54:22 by abelosev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,14 @@ int	ft_atoi_modif(const char *str)
 		i++;
 	}
 	return (res);
+}
+
+u_int64_t	get_timestamp(void)
+{
+	struct timeval	tv;
+	u_int64_t		time_ms;
+
+	gettimeofday(&tv, NULL);
+	time_ms = tv.tv_sec * 1000 + (tv.tv_usec / 1000);
+	return (time_ms);
 }

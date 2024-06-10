@@ -6,7 +6,7 @@
 /*   By: abelosev <abelosev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:04:50 by abelosev          #+#    #+#             */
-/*   Updated: 2024/06/10 19:05:21 by abelosev         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:41:10 by abelosev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,15 @@ int			ft_atoi_modif(const char *str);
 int			ft_usleep(t_philo *ph, u_int64_t gap);
 int			init_data(t_data *data, char **av);
 int			end_simul(t_philo *ph);
+int			ft_print(t_philo *ph, int index);
 void		free_list(t_philo *list);
 void		free_data(t_data *data);
 bool		check_nbr(const char *str, int *res);
 bool		check_input(int ac, char **av);
 char		*ft_strdup(const char *s1);
-void		ft_print(t_philo *ph, int index);
 void		*routine(void *arg);
+void		death_log(t_philo *ph);
+void		full_log(t_philo *ph);
 u_int64_t	get_timestamp(void);
 t_philo		*philo_list(t_data *data);
 t_philo		*philo_list(t_data *data);

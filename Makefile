@@ -10,7 +10,7 @@ SRC	=	${addprefix src/, \
 		free_outils.c \
 		init_data.c \
 		init_philo.c \
-		libft_outils.c \
+		basic_outils.c \
 		main.c \
 		routine.c \
 		philo_outils.c}

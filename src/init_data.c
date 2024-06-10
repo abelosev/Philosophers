@@ -6,7 +6,7 @@
 /*   By: abelosev <abelosev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:05:02 by abelosev          #+#    #+#             */
-/*   Updated: 2024/06/10 18:17:34 by abelosev         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:21:20 by abelosev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,16 @@ void	init_args(t_data *data, char **av)
 
 int	init_logs(t_data *data)
 {
-	data->logs = malloc(sizeof(char *) * 8);
+	data->logs = malloc(sizeof(char *) * 7);
 	if (!data->logs)
 		return (1);
-	data->logs[0] = ft_strdup("has taken a left fork\n");
-	data->logs[1] = ft_strdup("has taken a right fork\n");
-	data->logs[2] = ft_strdup("is eating\n");
-	data->logs[3] = ft_strdup("is sleeping\n");
-	data->logs[4] = ft_strdup("is thinking\n");
-	data->logs[5] = ft_strdup("died\n");
-	data->logs[6] = ft_strdup("All philosophers are full\n");
-	data->logs[7] = NULL;
+	data->logs[0] = ft_strdup("has taken a fork\n");
+	data->logs[1] = ft_strdup("is eating\n");
+	data->logs[2] = ft_strdup("is sleeping\n");
+	data->logs[3] = ft_strdup("is thinking\n");
+	data->logs[4] = ft_strdup("died\n");
+	data->logs[5] = ft_strdup("All philosophers are full\n");
+	data->logs[6] = NULL;
 	return (0);
 }
 

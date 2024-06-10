@@ -39,3 +39,28 @@ ERRORS :
 ==3474982== 
 ==3474982== For lists of detected and suppressed errors, rerun with: -s
 ==3474982== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+/// possibly lost if no_die : is it ok ? ///
+
+^C==3539598== 
+==3539598== Process terminating with default action of signal 2 (SIGINT)
+==3539598==    at 0x4905117: __futex_abstimed_wait_common64 (futex-internal.c:57)
+==3539598==    by 0x4905117: __futex_abstimed_wait_common (futex-internal.c:87)
+==3539598==    by 0x4905117: __futex_abstimed_wait_cancelable64 (futex-internal.c:139)
+==3539598==    by 0x490A623: __pthread_clockjoin_ex (pthread_join_common.c:105)
+==3539598==    by 0x109E31: main (main.c:44)
+==3539598== 
+==3539598== HEAP SUMMARY:
+==3539598==     in use at exit: 2,760 bytes in 18 blocks
+==3539598==   total heap usage: 18 allocs, 0 frees, 2,760 bytes allocated
+==3539598== 
+==3539598== LEAK SUMMARY:
+==3539598==    definitely lost: 0 bytes in 0 blocks
+==3539598==    indirectly lost: 0 bytes in 0 blocks
+==3539598==      possibly lost: 1,088 bytes in 4 blocks
+==3539598==    still reachable: 1,672 bytes in 14 blocks
+==3539598==         suppressed: 0 bytes in 0 blocks
+==3539598== Rerun with --leak-check=full to see details of leaked memory
+==3539598== 
+==3539598== For lists of detected and suppressed errors, rerun with: -s
+==3539598== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
