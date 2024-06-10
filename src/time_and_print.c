@@ -7,9 +7,7 @@ void ft_print(t_philo *ph, int index)
 	pthread_mutex_lock(&ph->data->print);
 	time_ms = get_timestamp();
 	if(ph->data->flag_death == true)
-	{
 		pthread_mutex_unlock(&ph->data->print);
-	}
 	else if(ph->data->nb_full == ph->data->philo_nb)
 		printf("%s\n", ph->data->logs[index]);
 	else
