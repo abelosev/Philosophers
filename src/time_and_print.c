@@ -9,9 +9,11 @@ void ft_print(t_philo *ph, int index)
 	if(ph->data->flag_death == true)
 	{
 		pthread_mutex_unlock(&ph->data->print);
-		return ;
 	}
-	printf("%llu %d %s\n", time_ms, ph->id, ph->data->logs[index]);
+	else if(ph->data->nb_full == ph->data->philo_nb)
+		printf("%s\n", ph->data->logs[index]);
+	else
+		printf("%llu %d %s\n", time_ms, ph->id, ph->data->logs[index]);
 	pthread_mutex_unlock(&ph->data->print);
 }
 
@@ -32,7 +34,7 @@ int ft_usleep(t_philo *ph, u_int64_t gap)
 	start = get_timestamp();
 	while(get_timestamp() - start < gap)
 	{
-		if(ph->data->flag_death == true) //попытка отследить этот флаг в других тредах
+		if(ph->data->flag_death == true || ph->data->nb_full == ph->data->philo_nb) //попытка отследить этот флаг в других тредах
 			return (1);
 		if(get_timestamp() - ph->start_meal >= (u_int64_t)ph->data->time_die)
 		{

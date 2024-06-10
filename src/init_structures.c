@@ -14,7 +14,7 @@ void init_args(t_data *data, char **av)
 
 int init_logs(t_data *data)
 {
-	data->logs = malloc(sizeof(char *) * 7);
+	data->logs = malloc(sizeof(char *) * 8);
 	if(!data->logs)
 		return (1);
 	data->logs[0] = ft_strdup("has taken a left fork\n");
@@ -23,7 +23,8 @@ int init_logs(t_data *data)
 	data->logs[3] = ft_strdup("is sleeping\n");
 	data->logs[4] = ft_strdup("is thinking\n");
 	data->logs[5] = ft_strdup("died\n");
-	data->logs[6] = NULL;
+	data->logs[6] = ft_strdup("All philosophers are full\n");
+	data->logs[7] = NULL;
 	return (0);
 }
 

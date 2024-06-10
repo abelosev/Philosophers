@@ -65,5 +65,7 @@ void *routine(void *arg)
 			break ;
 		ft_print(ph, 4);
 	}
+	if(ph->data->nb_full == ph->data->philo_nb)
+		ft_print(ph, 6);
 	return (void *)ph; // верно ли это
 }
