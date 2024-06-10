@@ -5,7 +5,18 @@ CFLAGS = -Wall -Wextra -Werror  -pthread -g3 -I./header
 SRCDIR = ./src/
 OBJDIR = ./obj/
 
-SRC = $(wildcard $(SRCDIR)/*.c)
+# SRC = $(wildcard $(SRCDIR)/*.c)
+
+SRC	=	${addprefix src/, \
+		check_input.c \
+		free_outils.c \
+		init_data.c \
+		init_philo.c \
+		libft_outils.c \
+		main.c \
+		routine.c \
+		time_and_print.c}
+
 OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
 
 $(NAME) : $(OBJDIR) $(OBJ)

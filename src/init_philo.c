@@ -9,7 +9,7 @@ t_philo *philo_create(int i, t_data *data)
 		return (NULL);
 	ph->id = i;
 	ph->had_meals = 0;
-	ph->start_meal = 0;
+	ph->start_meal = 0; //should I add a mutex here?
 	ph->data = data;
 	ph->dead = false;
 	if(pthread_create(&(ph->th), NULL, routine, (void *)ph))
