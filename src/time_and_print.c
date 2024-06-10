@@ -37,7 +37,10 @@ int ft_usleep(t_philo *ph, u_int64_t gap)
 		if(get_timestamp() - ph->start_meal >= (u_int64_t)ph->data->time_die)
 		{
 			ft_print(ph, 5);
+			ph->dead = true;
+			pthread_mutex_lock(&ph->data->dead); //is it really necessary?
 			ph->data->flag_death = true;
+			pthread_mutex_unlock(&ph->data->dead);
 			return (1);
 		}
 		usleep(100);

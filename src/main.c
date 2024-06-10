@@ -4,6 +4,7 @@
 int main(int ac, char **av)
 {
 	t_data *data;
+	t_philo *start;
 
 	if(!check_input(ac, av))
 		exit(EXIT_FAILURE);
@@ -21,19 +22,20 @@ int main(int ac, char **av)
 		free_data(data);
 		exit(EXIT_FAILURE);
 	}
-	while(data->philos != NULL)
+	start = data->philos;
+	while(start != NULL)
 	{
-		if(pthread_join(data->philos->th, (void **)&(data))) //какой аргумент?
+		if(pthread_join(start->th, NULL)) //какой аргумент? (void **)&(data) ?
 		{
 			free_data(data);
 			exit(EXIT_FAILURE);
 		}
-		if(((t_data *)data)->flag_death == true || ((t_data *)data)->nb_full == ((t_data *)data)->philo_nb)
-		{
-			free(data);
-			return (0);
-		}
-		data->philos = data->philos->next;
+		// if(((t_data *)data)->flag_death == true || ((t_data *)data)->nb_full == ((t_data *)data)->philo_nb)
+		// {
+		// 	free(data);
+		// 	return (0);
+		// }
+		start = start->next;
 	}
 	free_data(data);
 	return (0);

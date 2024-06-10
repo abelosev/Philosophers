@@ -41,6 +41,8 @@ int init_mutexes(t_data *data)
 		i++;
 	}
 	pthread_mutex_init(&data->print, NULL);
+	pthread_mutex_init(&data->full, NULL);
+	pthread_mutex_init(&data->dead, NULL);
 	return (0);
 }
 
@@ -68,6 +70,7 @@ t_philo *philo_create(int i, t_data *data)
 	ph->had_meals = 0;
 	ph->start_meal = 0;
 	ph->data = data;
+	ph->dead = false;
 	if(pthread_create(&(ph->th), NULL, routine, (void *)ph))
 		return (NULL);
 	ph->next = NULL;
