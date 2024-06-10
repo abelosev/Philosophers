@@ -6,7 +6,7 @@
 /*   By: abelosev <abelosev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:05:36 by abelosev          #+#    #+#             */
-/*   Updated: 2024/06/10 18:41:22 by abelosev         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:49:45 by abelosev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	end_simul(t_philo *ph)
 	
 	pthread_mutex_lock(&ph->data->dead);
 	pthread_mutex_lock(&(ph->data->full));
+	if(get_timestamp() - ph->start_meal >= (u_int64_t)ph->data->time_die)
+		ph->data->flag_death = true;
 	if (ph->data->flag_death)
 		res = 1;
 	else if (ph->data->meal_nb != 0 && ph->data->nb_full == ph->data->philo_nb)
@@ -39,7 +41,7 @@ int	end_simul(t_philo *ph)
 	return (res);
 }
 
-void	ft_print(t_philo *ph, int index)
+int	ft_print(t_philo *ph, int index)
 {
 	u_int64_t	time_ms;
 
@@ -64,6 +66,7 @@ void	ft_print(t_philo *ph, int index)
 		pthread_mutex_unlock(&ph->data->dead);
 	}
 	pthread_mutex_unlock(&ph->data->print);
+	return (0);
 }
 
 int ft_usleep(t_philo *ph, u_int64_t gap)
