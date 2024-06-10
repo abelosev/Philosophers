@@ -25,7 +25,7 @@ void *routine(void *arg)
 	else
 		r_index = ph->id - 2;
 
-	while(ph->data->flag_death == false) //&& ph->had_meals < ph->data->meal_nb)
+	while(!ph->data->flag_death) //&& ph->had_meals < ph->data->meal_nb)
 	{
 		if(ph->id % 2 != 0)
 		{
@@ -65,7 +65,7 @@ void *routine(void *arg)
 			break ;
 		ft_print(ph, 4);
 	}
-	if(ph->data->nb_full == ph->data->philo_nb)
+	if(ph->data->meal_nb != 0 && ph->data->nb_full == ph->data->philo_nb)
 		ft_print(ph, 6);
 	return (void *)ph; // верно ли это
 }

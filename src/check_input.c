@@ -46,24 +46,10 @@ bool check_input(int ac, char **av)
 	}
 	while(i < ac)
 	{
-		if(!check_nbr(av[i], &res))
+		if(!check_nbr(av[i], &res) || (i == 1 && res > 200)
+			|| (i != 5 && res == 0) || (i >= 2 && i <= 4 && res < 60))
 		{
 			printf("At least one of the args is not correct\n");
-			return (false);
-		}
-		if(i == 1 && res > 200)
-		{
-			printf("The nb of philos should be less than 200\n");
-			return (false);
-		}
-		if(i != 5 && res == 0)
-		{
-			printf("This args can't be equal to '0'\n");
-			return (false);
-		}
-		if(i >= 2 && i <= 4 && res < 60)
-		{
-			printf("The value is lower than 60 ms\n");
 			return (false);
 		}
 		res = 0;
