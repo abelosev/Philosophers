@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   routine.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abelosev <abelosev@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/10 18:05:30 by abelosev          #+#    #+#             */
+/*   Updated: 2024/06/10 18:05:31 by abelosev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/philo.h"
 
 void *routine(void *arg)
@@ -25,7 +37,7 @@ void *routine(void *arg)
 	else
 		r_index = ph->id - 2;
 
-	while(!ph->data->flag_death) //&& ph->had_meals < ph->data->meal_nb)
+	while(1) //&& ph->had_meals < ph->data->meal_nb)
 	{
 		if(ph->id % 2 != 0)
 		{
@@ -58,7 +70,7 @@ void *routine(void *arg)
 			pthread_mutex_lock(&(ph->data->full));
 			ph->data->nb_full++;
 			pthread_mutex_unlock(&(ph->data->full));
-			break ;
+			break ;										// enlever le break 
 		}
 		ft_print(ph, 3);
 		if(ft_usleep(ph, ph->data->time_sleep))

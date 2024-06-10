@@ -5,8 +5,6 @@ CFLAGS = -Wall -Wextra -Werror  -pthread -g3 -I./header
 SRCDIR = ./src/
 OBJDIR = ./obj/
 
-# SRC = $(wildcard $(SRCDIR)/*.c)
-
 SRC	=	${addprefix src/, \
 		check_input.c \
 		free_outils.c \
@@ -20,7 +18,7 @@ SRC	=	${addprefix src/, \
 OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
 
 $(NAME) : $(OBJDIR) $(OBJ)
-	$(CC) $(OBJ) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@

@@ -1,21 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_data.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abelosev <abelosev@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/10 18:05:02 by abelosev          #+#    #+#             */
+/*   Updated: 2024/06/10 18:17:34 by abelosev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/philo.h"
 
-void init_args(t_data *data, char **av)
+void	init_args(t_data *data, char **av)
 {
 	data->philo_nb = ft_atoi_modif(av[1]);
 	data->time_die = ft_atoi_modif(av[2]);
 	data->time_eat = ft_atoi_modif(av[3]);
 	data->time_sleep = ft_atoi_modif(av[4]);
-	if(av[5])
+	if (av[5])
 		data->meal_nb = ft_atoi_modif(av[5]);
 	else
-		data->meal_nb = 0;				// или -1 ?
+		data->meal_nb = 0;
 }
 
-int init_logs(t_data *data)
+int	init_logs(t_data *data)
 {
 	data->logs = malloc(sizeof(char *) * 8);
-	if(!data->logs)
+	if (!data->logs)
 		return (1);
 	data->logs[0] = ft_strdup("has taken a left fork\n");
 	data->logs[1] = ft_strdup("has taken a right fork\n");
@@ -28,15 +40,15 @@ int init_logs(t_data *data)
 	return (0);
 }
 
-int init_mutexes(t_data *data)
+int	init_mutexes(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	data->fork = malloc(sizeof(pthread_mutex_t) * data->philo_nb);
-	if(!data->fork)
+	if (!data->fork)
 		return (1);
-	while(i < data->philo_nb)
+	while (i < data->philo_nb)
 	{
 		pthread_mutex_init(&data->fork[i], NULL);
 		i++;
@@ -47,15 +59,15 @@ int init_mutexes(t_data *data)
 	return (0);
 }
 
-int init_data(t_data *data, char **av)
+int	init_data(t_data *data, char **av)
 {
 	init_args(data, av);
 	data->flag_death = false;
 	data->nb_full = 0;
 	data->start_simul = get_timestamp();
-	if(init_logs(data))
+	if (init_logs(data))
 		return (1);
-	if(init_mutexes(data))
+	if (init_mutexes(data))
 		return (1);
 	return (0);
 }

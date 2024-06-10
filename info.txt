@@ -1,3 +1,10 @@
 https://github.com/nafuka11/philosophers-visualizer/blob/master/README.md
 
 valgrind --tool=helgrind
+
+
+COMMENTAIRES:
+
+free_outils.c 51 : pthread_mutex_destroy(&(data->print)); //what if it doesn't exist yet?
+
+init_data.c 24 : data->meal_nb = 0;	// или -1 ?

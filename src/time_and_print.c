@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   time_and_print.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abelosev <abelosev@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/10 18:05:36 by abelosev          #+#    #+#             */
+/*   Updated: 2024/06/10 18:05:37 by abelosev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/philo.h"
 
 void ft_print(t_philo *ph, int index)
@@ -6,12 +18,24 @@ void ft_print(t_philo *ph, int index)
 	
 	pthread_mutex_lock(&ph->data->print);
 	time_ms = get_timestamp();
+	pthread_mutex_lock(&ph->data->dead);
 	if(ph->data->flag_death)
+	{
+		// printf("%s\n", ph->data->logs[5]);
 		pthread_mutex_unlock(&ph->data->print);
-	else if(ph->data->meal_nb != 0 && ph->data->nb_full == ph->data->philo_nb)
+		pthread_mutex_unlock(&ph->data->dead);			// fonction separee pour check flag_dead
+		// return ;
+	}
+	else if(ph->data->meal_nb != 0 && ph->data->nb_full == ph->data->philo_nb) /// proteger !!
+	{
 		printf("%s\n", ph->data->logs[index]);
+		pthread_mutex_unlock(&ph->data->dead);
+	}
 	else
-		printf("%llu %d %s\n", time_ms, ph->id, ph->data->logs[index]);
+	{
+		printf("%lu %d %s\n", time_ms, ph->id, ph->data->logs[index]);
+		pthread_mutex_unlock(&ph->data->dead);
+	}
 	pthread_mutex_unlock(&ph->data->print);
 }
 
@@ -32,8 +56,13 @@ int ft_usleep(t_philo *ph, u_int64_t gap)
 	start = get_timestamp();
 	while(get_timestamp() - start < gap)
 	{
+		pthread_mutex_lock(&ph->data->dead);
 		if(ph->data->flag_death || ph->data->nb_full == ph->data->philo_nb) //попытка отследить этот флаг в других тредах
+		{
+			pthread_mutex_unlock(&ph->data->dead); 				// !!!
 			return (1);
+		}
+		pthread_mutex_unlock(&ph->data->dead);
 		if(get_timestamp() - ph->start_meal >= (u_int64_t)ph->data->time_die)
 		{
 			ft_print(ph, 5);

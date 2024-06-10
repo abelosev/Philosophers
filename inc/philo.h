@@ -1,49 +1,61 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abelosev <abelosev@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/10 18:04:50 by abelosev          #+#    #+#             */
+/*   Updated: 2024/06/10 18:12:55 by abelosev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <errno.h>
-#include <pthread.h>
-#include <sys/time.h>
-#include <sys/wait.h>
-#include <stdbool.h>
-#include <stdint.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <errno.h>
+# include <pthread.h>
+# include <sys/time.h>
+# include <sys/wait.h>
+# include <stdbool.h>
+# include <stdint.h>
 
 typedef struct s_philo
 {
-	int id;
-	pthread_t th;
-	int had_meals;
-	bool dead;
-	u_int64_t start_meal;
-	struct s_data *data;
-	struct s_philo *next;
-} t_philo;
+	int				id;
+	int				had_meals;
+	pthread_t		th;
+	u_int64_t		start_meal;
+	struct s_data	*data;
+	struct s_philo	*next;
+}	t_philo;
 
 typedef struct s_data
 {
-	int philo_nb;
-	int time_die;
-	int time_eat;
-	int time_sleep;
-	int	meal_nb;
-	u_int64_t start_simul;
-	t_philo *philos;
-	bool flag_death;
-	int nb_full;
-	pthread_mutex_t *fork;
-	pthread_mutex_t print;
-	pthread_mutex_t full;
-	pthread_mutex_t dead;
-	char **logs;
-} t_data;
+	int				philo_nb;
+	int				time_die;
+	int				time_eat;
+	int				time_sleep;
+	int				meal_nb;
+	int				nb_full;
+	u_int64_t		start_simul;
+	t_philo			*philos;
+	bool			flag_death;
+	pthread_mutex_t	*fork;
+	pthread_mutex_t	print;
+	pthread_mutex_t	full;
+	pthread_mutex_t	dead;
+	char			**logs;
+}	t_data;
 
-//outils
+int			ft_usleep(t_philo *ph, u_int64_t gap);
+int			ft_atoi_modif(const char *str);
+int			init_data(t_data *data, char **av);
 void		free_list(t_philo *list);
 void		free_data(t_data *data);
-int			ft_atoi_modif(const char *str);
 bool		check_nbr(const char *str, int *res);
 bool		check_input(int ac, char **av);
 char		*ft_strdup(const char *s1);
@@ -51,8 +63,6 @@ void		ft_print(t_philo *ph, int index);
 void		*routine(void *arg);
 u_int64_t	get_timestamp(void);
 t_philo		*philo_list(t_data *data);
-int			init_data(t_data *data, char **av);
 t_philo		*philo_list(t_data *data);
-int			ft_usleep(t_philo *ph, u_int64_t gap);
 
 #endif
