@@ -17,7 +17,7 @@ int	taking_fork(t_philo *ph, int f_index)
 	pthread_mutex_lock(&ph->data->fork[f_index]);
 	if (ft_print(ph, 0))
 	{
-		// pthread_mutex_unlock(&ph->data->fork[f_index]); //
+		pthread_mutex_unlock(&ph->data->fork[f_index]);
 		return (1);
 	}
 	return (0);
@@ -52,16 +52,25 @@ int	forks_taken(t_philo *ph, int l_index, int r_index)
 
 int	eating(t_philo *ph, int l_index, int r_index)
 {
-	if (taking_fork(ph, l_index))
+	if(ph->id == ph->data->philo_nb)
 	{
-		pthread_mutex_unlock(&ph->data->fork[l_index]);
+		if (taking_fork(ph, r_index))
 		return (1);	
+		if (taking_fork(ph, l_index))
+		{
+			pthread_mutex_unlock(&ph->data->fork[r_index]);
+			return (1);
+		}
 	}
-	if (taking_fork(ph, r_index))
+	else
 	{
-		pthread_mutex_unlock(&ph->data->fork[r_index]);
-		pthread_mutex_unlock(&ph->data->fork[l_index]);
-		return (1);
+		if (taking_fork(ph, l_index))
+		return (1);	
+		if (taking_fork(ph, r_index))
+		{
+			pthread_mutex_unlock(&ph->data->fork[l_index]);
+			return (1);
+		}
 	}
 	if (forks_taken(ph, l_index, r_index))
 		return (1);
