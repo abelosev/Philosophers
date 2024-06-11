@@ -59,7 +59,7 @@ bool	check_input(int ac, char **av)
 	while (i < ac)
 	{
 		if (!check_nbr(av[i], &res) || (i == 1 && res > 200)
-			|| (i != 5 && res == 0) || (i >= 2 && i <= 4 && res < 60))
+			|| res == 0 || (i >= 2 && i <= 4 && res < 60))
 		{
 			printf("At least one of the args is not correct\n");
 			return (false);

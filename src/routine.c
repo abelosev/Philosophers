@@ -60,29 +60,25 @@ int	forks_taken(t_philo *ph, int l_index, int r_index)
 
 int	eating(t_philo *ph, int l_index, int r_index)
 {
-	if (ph->data->philo_nb % 2 != 0)
+	if (taking_fork(ph, l_index))
+		return (1);
+	if (taking_fork(ph, r_index))
 	{
-		if (taking_fork(ph, l_index))
-			return (1);
-		if (taking_fork(ph, r_index))
-		{
-			pthread_mutex_unlock(&ph->data->fork[l_index]);
-			return (1);
-		}
-	}
-	else if (ph->data->philo_nb % 2 == 0)
-	{
-		if (taking_fork(ph, r_index))
-			return (1);
-		if (taking_fork(ph, l_index))
-		{
-			pthread_mutex_unlock(&ph->data->fork[r_index]);
-			return (1);
-		}
+		pthread_mutex_unlock(&ph->data->fork[r_index]);
+		return (1);
 	}
 	if (forks_taken(ph, l_index, r_index))
 		return (1);
 	return (0);
+}
+
+void forks_index(t_philo *ph, int *l_index, int *r_index)
+{
+	*l_index = ph->id - 1;
+	if (ph->id == 1)
+		*r_index = ph->data->philo_nb - 1;
+	else
+		*r_index = ph->id - 2;
 }
 
 void	*routine(void *arg)
@@ -95,11 +91,12 @@ void	*routine(void *arg)
 	ph->start_meal = ph->data->start_simul;
 	if (one_philo(ph))
 		return ((void *)ph);
-	l_index = ph->id - 1;
-	if (ph->id == 1)
-		r_index = ph->data->philo_nb - 1;
-	else
-		r_index = ph->id - 2;
+	forks_index(ph, &l_index, &r_index);
+	if(ph->id % 2 == 0)
+	{
+		if(ft_usleep(ph, 10))
+			return ((void *)ph);
+	}
 	while (1)
 	{
 		if (eating(ph, l_index, r_index))
