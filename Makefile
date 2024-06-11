@@ -13,6 +13,8 @@ SRC	=	${addprefix src/, \
 		basic_outils.c \
 		main.c \
 		routine.c \
+		eating.c \
+		print_outils.c \
 		philo_outils.c}
 
 OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))

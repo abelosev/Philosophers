@@ -6,7 +6,7 @@
 /*   By: abelosev <abelosev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:04:50 by abelosev          #+#    #+#             */
-/*   Updated: 2024/06/10 19:41:10 by abelosev         ###   ########.fr       */
+/*   Updated: 2024/06/11 13:11:00 by abelosev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int			ft_usleep(t_philo *ph, u_int64_t gap);
 int			init_data(t_data *data, char **av);
 int			end_simul(t_philo *ph);
 int			ft_print(t_philo *ph, int index);
+int			eating(t_philo *ph, int l_index, int r_index);
 void		free_list(t_philo *list);
 void		free_data(t_data *data);
 bool		check_nbr(const char *str, int *res);

@@ -6,31 +6,11 @@
 /*   By: abelosev <abelosev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:05:36 by abelosev          #+#    #+#             */
-/*   Updated: 2024/06/10 21:30:07 by abelosev         ###   ########.fr       */
+/*   Updated: 2024/06/11 13:15:46 by abelosev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
-
-void	death_log(t_philo *ph)
-{
-	u_int64_t	time_ms;
-
-	pthread_mutex_lock(&ph->data->print);
-	time_ms = get_timestamp() - ph->data->start_simul;
-	printf("%llu %d %s\n", time_ms, ph->id, ph->data->logs[4]);
-	pthread_mutex_unlock(&ph->data->print);
-}
-
-void	full_log(t_philo *ph)
-{
-	u_int64_t	time_ms;
-
-	pthread_mutex_lock(&ph->data->print);
-	time_ms = get_timestamp() - ph->data->start_simul;
-	printf("%llu %s\n", time_ms, ph->data->logs[5]);
-	pthread_mutex_unlock(&ph->data->print);
-}
 
 int	end_simul(t_philo *ph)
 {
@@ -54,19 +34,6 @@ int	end_simul(t_philo *ph)
 	pthread_mutex_unlock(&(ph->data->full));
 	pthread_mutex_unlock(&ph->data->dead);
 	return (res);
-}
-
-int	ft_print(t_philo *ph, int index)
-{
-	u_int64_t	time_ms;
-
-	if (end_simul(ph) != 0)
-		return (1);
-	pthread_mutex_lock(&ph->data->print);
-	time_ms = get_timestamp() - ph->data->start_simul;
-	printf("%llu %d %s\n", time_ms, ph->id, ph->data->logs[index]);
-	pthread_mutex_unlock(&ph->data->print);
-	return (0);
 }
 
 int	ft_usleep(t_philo *ph, u_int64_t gap)
